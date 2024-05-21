@@ -80,4 +80,31 @@ public class SemanticAnalysisHandlerTests {
     h.handleRequest(input3);
     assertEquals(expected, h.handleRequest(input4));
   }
+
+  @Test
+  public void handleRequestSemanticAnalysisNew() throws Exception {
+    ChatHandler h = new ChatHandler();
+    String url1 = "http://localhost:4000/chat?user=onat&message=😂";
+    String url2 = "http://localhost:4000/chat?user=edwin&message=doggy🥹!!!";
+    String url4 = "http://localhost:4000/semantic-analysis?user=onat";
+    URI input1 = new URI(url1);
+    URI input2 = new URI(url2);
+    URI input4 = new URI(url4);
+    String expected = "onat: 😂 This message has a LOL vibe.\n\n";
+    h.handleRequest(input1);
+    h.handleRequest(input2);
+    assertEquals(expected, h.handleRequest(input4));
+  }
+
+   @Test
+  public void handleRequestSemanticAnalysisNew2() throws Exception {
+    ChatHandler h = new ChatHandler();
+    String url1 = "http://localhost:4000/chat?user=onat&message=😂🥹";
+    String url4 = "http://localhost:4000/semantic-analysis?user=onat";
+    URI input1 = new URI(url1);
+    URI input4 = new URI(url4);
+    String expected = "onat: 😂🥹 This message has a LOL vibe. This message has a awwww vibe.\n\n";
+    h.handleRequest(input1);
+    assertEquals(expected, h.handleRequest(input4));
+  }
 }
